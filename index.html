@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AbduPips Traders World</title>
+  <style>
+    :root{
+      --bg:#000;
+      --panel:#0f0f0f;
+      --accent:#00b84f;
+      --gold:#d4af37;
+      --muted:#cfcfcf;
+      --radius:10px;
+      --maxw:980px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#fff;font-family:Poppins,Segoe UI,Roboto,Arial;line-height:1.4}
+    header{background:#0b0b0b;border-bottom:3px solid var(--gold);padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+    header .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;font-size:18px}
+    header h1{margin:0;font-size:1.15rem;color:var(--accent)}
+    nav a{color:#fff;text-decoration:none;margin-left:12px;font-weight:600}
+    nav a:hover{color:var(--gold)}
+
+    main{max-width:var(--maxw);margin:32px auto;padding:0 16px}
+    .hero{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:40px;border-radius:var(--radius);text-align:center;border:1px solid rgba(212,175,55,0.08)}
+    .hero h2{color:var(--gold);margin:0 0 8px;font-size:28px}
+    .hero p{color:var(--muted);max-width:760px;margin:0 auto 18px}
+    .btn{background:var(--accent);color:#000;padding:10px 16px;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+
+    .cols{display:grid;grid-template-columns:1fr 420px;gap:22px;margin-top:26px}
+    .panel{background:var(--panel);padding:18px;border-radius:var(--radius);border:1px solid rgba(212,175,55,0.06)}
+    .panel h3{margin-top:0;color:var(--gold)}
+    .muted{color:var(--muted);font-size:0.95rem}
+
+    form .field{margin-bottom:10px}
+    input,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff}
+    input::placeholder{color:#999}
+    .small{font-size:0.92rem}
+    .link{color:var(--gold);cursor:pointer}
+
+    .center{display:flex;align-items:center;justify-content:center}
+    .hidden{display:none}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left}
+    th{background:rgba(0,0,0,0.3);color:var(--gold)}
+
+    footer{max-width:var(--maxw);margin:28px auto 60px;padding:16px;color:#999;text-align:center}
+
+    /* WhatsApp floating button */
+    .whatsapp-btn{
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:#25D366;
+      color:#fff;
+      border-radius:50%;
+      width:60px;
+      height:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,0.3);
+      z-index:1000;
+    }
+    @media (max-width:880px){
+      .cols{grid-template-columns:1fr}
+      nav a{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <h1>AbduPips Traders World</h1>
+        <div style="font-size:12px;color:var(--muted)">Start Smart. Trade Smarter — with AbduPips Traders World</div>
+      </div>
+    </div>
+    <nav>
+      <a id="navHome" href="#">Home</a>
+      <a id="navDashboard" href="#" class="hidden">Dashboard</a>
+      <a id="navAdmin" href="#" class="hidden">Admin</a>
+      <a id="navLogout" href="#" class="hidden">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME / REGISTER / LOGIN are on one page with panels -->
+    <section id="homeView">
+      <div class="hero panel">
+        <h2>Welcome to AbduPips Traders World</h2>
+        <p>Empowering Smart Trading for a Smarter World. Create an account to access trading tools, charts, mentorship and more. If you already have an account, just login — the platform will take you straight to your dashboard.</p>
+        <div class="center" style="gap:12px;margin-top:18px">
+          <button class="btn" onclick="showPanel('registerPanel')">Create Account</button>
+          <button class="btn" style="background:var(--gold)}" onclick="showPanel('loginPanel')">Login</button>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <h3>Why AbduPips?</h3>
+          <p class="muted">We combine mentorship, daily trade ideas, and easy-to-use tools for traders at every level. Our platform is built to be fast, secure and simple.</p>
+          <ul class="muted">
+            <li>Signals & mentoring</li>
+            <li>Interactive charts</li>
+            <li>Secure member area</li>
+            <li>Dedicated support</li>
+          </ul>
+        </div>
+
+        <div>
+          <!-- REGISTER PANEL -->
+          <div id="registerPanel" class="panel">
+            <h3>Create Account</h3>
+            <div class="muted small">Fill in your details. After successful registration you'll be redirected to the login page automatically.</div>
+            <form id="registerForm" onsubmit="event.preventDefault(); handleRegister();">
+              <div class="field"><input id="r_name" placeholder="Full name" required/></div>
+              <div class="field"><input id="r_email" type="email" placeholder="Email address" required/></div>
+              <div class="field"><input id="r_passport" placeholder="Passport / ID number" required/></div>
+              <div class="field"><input id="r_password" type="password" placeholder="Password (min 6 chars)" required/></div>
+              <div class="field"><input id="r_confirm" type="password" placeholder="Confirm password" required/></div>
+              <div class="field"><label class="small muted">Account type</label>
+                <select id="r_type"><option value="user">User</option><option value="partner">Partner</option></select>
+              </div>
+              <div class="field"><button class="btn" type="submit">Register & Go to Login</button></div>
+              <div class="muted small">Already registered? <span class="link" onclick="showPanel('loginPanel')">Login here</span></div>
+            </form>
+          </div>
+
+          <!-- LOGIN PANEL -->
+          <div id="loginPanel" class="panel" style="margin-top:16px">
+            <h3>Login</h3>
+            <div class="muted small">Login with the email and password you used to register.</div>
+            <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+              <div class="field"><input id="l_email" type="email" placeholder="Email address" required/></div>
+              <div class="field"><input id="l_password" type="password" placeholder="Password" required/></div>
+              <div class="field"><button class="btn" type="submit">Login</button></div>
+              <div class="muted small">Admin? Use <strong>admin@abdupips.com</strong> / <strong>12345</strong></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="panel" style="margin-top:20px">
+        <h3>Contact Me</h3>
+        <p class="muted">Name: Abdulsamad Jimoh</p>
+        <p class="muted">Phone: 07048647031</p>
+      </div>
+
+    </section>
+
+    <!-- USER DASHBOARD -->
+    <section id="userView" class="hidden">
+      <div class="panel">
+        <h3>User Dashboard</h3>
+        <div id="userWelcome" class="muted">Welcome back</div>
+        <div style="margin-top:12px">
+          <button class="btn" onclick="goToCharts()">Open Charts</button>
+          <button class="btn" style="margin-left:8px" onclick="openChat()">Ask the Platform</button>
+        </div>
+      </div>
+      <div style="height:18px"></div>
+      <div class="panel">
+        <h3>Your Profile</h3>
+        <div id="profileBox" class="muted small"></div>
+      </div>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="adminView" class="hidden">
+      <div class="panel">
+        <h3>Admin Dashboard</h3>
+        <div class="muted">List of registered accounts</div>
+        <div style="margin-top:14px;overflow:auto">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Passport/ID</th><th>Type</th><th>Actions</th></tr></thead>
+            <tbody id="adminUsers"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © <span id="year"></span> AbduPips Traders World — Empowering Smart Trading.
+  </footer>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/2348056554499" target="_blank" class="whatsapp-btn" title="Chat with Abdulsamad on WhatsApp">📱</a>
+
+  <script>
+    // --- CONFIG ---
+    const ADMIN_EMAIL = 'admin@abdupips.com';
+    const ADMIN_PASS = '12345';
+    const STORAGE_USERS = 'abdupips_users';
+    const STORAGE_SESSION = 'abdupips_current';
+
+    function el(id){return document.getElementById(id)}
+    function saveUsers(users){localStorage.setItem(STORAGE_USERS, JSON.stringify(users));}
+    function loadUsers(){return JSON.parse(localStorage.getItem(STORAGE_USERS)||'[]');}
+    function setSession(obj){localStorage.setItem(STORAGE_SESSION, JSON.stringify(obj));}
+    function getSession(){return JSON.parse(localStorage.getItem(STORAGE_SESSION)||'null');}
+    function clearSession(){localStorage.removeItem(STORAGE_SESSION);}
+
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    window.addEventListener('load', ()=>{
+      const s = getSession();
+      if(s){
+        if(s.role === 'admin') showDashboard('admin');
+        else showDashboard('user');
+      }
+    });
+
+    function showPanel(id){ el(id)?.scrollIntoView({behavior:'smooth'}); }
+
+    function showDashboard(type){
+      el('homeView').classList.add('hidden');
+      el('userView').classList.add('hidden');
+      el('adminView').classList.add('hidden');
+      if(type==='user'){
+        el('userView').classList.remove('hidden');
+        el('navDashboard').classList.remove('hidden');
+        el('navLogout').classList.remove('hidden');
+        el('navAdmin').classList.add('hidden');
+        const s = getSession();
+        el('userWelcome').innerText = `Welcome, ${s.name}`;
+        el('profileBox').innerText = `Name: ${s.name}\nEmail: ${s.email}\nPassport/ID: ${s.passport}\nAccount type: ${s.type}`;
+      }
+      if(type==='admin'){
+        el('adminView').classList.remove('hidden');
+        el('navAdmin').classList.remove('hidden');
+        el('navDashboard').classList.remove('hidden');
+        el('navLogout').classList.remove('hidden');
+        populateAdminUsers();
+      }
+      el('navLogout').onclick = ()=>{ logout(); };
+      el('navDashboard').onclick = ()=>{ const s=getSession(); if(s.role==='admin') showDashboard('admin'); else showDashboard('user'); };
+      el('navHome').onclick = ()=>{ location.reload(); };
+    }
+
+    function handleRegister(){
+      const name = el('r_name').value.trim();
+      const email = el('r_email').value.trim().toLowerCase();
+      const passport = el('r_passport').value.trim();
+      const password = el('r_password').value;
+      const confirm = el('r_confirm').value;
+      const type = el('r_type').value;
+      if(!name||!email||!passport||!password){alert('Please complete all fields');return;}
+      if(password.length<6){alert('Password must be at least 6 characters');return;}
+      if(password!==confirm){alert('Passwords do not match');return;}
+      const users = loadUsers();
+      if(users.find(u=>u.email===email)){alert('This email is already registered. Please login.');showPanel('loginPanel');return;}
+      const user = {id:Date.now(), name, email, passport, password, type, role:'user'};
+      users.push(user);
+      saveUsers(users);
+      alert('Registration successful — you will be redirected to login');
+      el('registerForm').reset();
+      setTimeout(()=>{ showPanel('loginPanel'); el('l_email').value = email; el('l_password').focus(); },400);
+    }
+
+    function handleLogin(){
+      const email = el('l_email').value.trim().toLowerCase();
+      const password = el('l_password').value;
+      if(email===ADMIN_EMAIL && password===ADMIN_PASS){
+        const adminSession = {id:'admin', name:'Admin', email:ADMIN_EMAIL, role:'admin'};
+        setSession(adminSession);
+        showDashboard('admin'); return;
+      }
+      const users = loadUsers();
+      const found = users.find(u=>u.email===email && u.password===password);
+      if(!found){alert('Invalid credentials.');return;}
+      const session = {id:found.id,name:found.name,email:found.email,passport:found.passport,type:found.type,role:'user'};
+      setSession(session);
+      showDashboard('user');
+    }
+
+    function logout(){clearSession();alert('You have been logged out');location.reload();}
+
+    function populateAdminUsers(){
+      const users = loadUsers();
+      const tbody = el('adminUsers');
+      tbody.innerHTML = '';
+      users.forEach((u,i)=>{const tr=document.createElement('tr');
+        tr.innerHTML=`<td>${i+1}</td><td>${u.name}</td><td>${u.email}</td><td>${u.passport}</td><td>${u.type||'user'}</td><td><button class='btn' onclick='deleteUser(${u.id})'>Delete</button></td>`;
+        tbody.appendChild(tr);});
+    }
+    function deleteUser(id){if(!confirm('Delete this user?')) return;let users=loadUsers();users=users.filter(u=>u.id!==id);saveUsers(users);populateAdminUsers();}
+
+    function goToCharts(){alert('Charts section coming next — will include interactive Chart.js charts.');}
+    function openChat(){alert('Chatbot coming next — will answer platform questions automatically.');}
+
+    window.handleRegister=handleRegister;window.handleLogin=handleLogin;window.showPanel=showPanel;
+  </script>
+</body>
+</html>
